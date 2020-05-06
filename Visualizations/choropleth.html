@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+    integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
+    crossorigin>
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
+    integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
+    crossorigin />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css' rel='stylesheet' />
+    <script type="text/javascript" src="men_features.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
+    </style>
+</head>
+<body>
+
+<div id='map'></div>
+<script>
+
+var mapboxAccessToken = 'pk.eyJ1IjoiYW1pcmdpIiwiYSI6ImNrOXVia2c0MzAwMTYzbXM3ZjU5ZG5pdncifQ.x6fyDjifIJrzVdfqEFMNpw';
+var map = L.map('map', {
+  center: [18,7],
+  zoom: 3.2
+
+});
+
+//adds a base map to the frame
+L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + mapboxAccessToken, {
+    id: 'mapbox/light-v9',
+    tileSize: 512,
+    zoomOffset: -1
+}).addTo(map);
+//Adds the geojson data as a tile over the map
+L.tileLayer('mapbox://styles/amirgi/ck9ucwiow02nn1ipjuk248acw').addTo(map);
+L.geoJson(menData).addTo(map);
+
+//function which specifies the color based on the density
+function getColor(d) {
+    return d > 100 ? '#800026' :
+           d > 100  ? '#BD0026' :
+           d > 90  ? '#E31A1C' :
+           d > 70  ? '#FC4E2A' :
+           d > 50   ? '#FD8D3C' :
+           d > 10   ? '#FEB24C' :
+           d > 1   ? '#FED976' :
+                      '#FFEDA0';
+}
+
+function style(feature) {
+    return {
+        fillColor: getColor(feature.properties.density),
+        weight: 2,
+        opacity: 1,
+        color: 'white',
+        dashArray: '3',
+        fillOpacity: 0.7
+    };
+}
+
+L.geoJson(menData, {style: style}).addTo(map);
+
+
+</script>
+
+</body>
+</html>
