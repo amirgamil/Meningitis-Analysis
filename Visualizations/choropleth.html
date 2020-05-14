@@ -157,10 +157,15 @@ function setUpMap() {
   }
 
   //Adds the geojson data as a tile over the map
-  geojson =  new L.GeoJSON.AJAX("mengeo.geojson", {
+  geojson =  new L.GeoJSON(menData, {
       style: style,
       onEachFeature: onEachFeature
   }).addTo(map);
+
+  // geojson =  new L.GeoJSON.AJAX("mengeo.geojson", {
+  //     style: style,
+  //     onEachFeature: onEachFeature
+  // }).addTo(map);
 
 
 
