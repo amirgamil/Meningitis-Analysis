@@ -2,6 +2,7 @@ Current_Data/Map_Data
 Current_Data/Twitter_Data
 .DS_Store
 Code/AR-Net
-Code/outputs
-Code/cache_dir
-Code/runs
+Code/Text Information Extraction/content
+Code/Text Information Extraction/cache_dir
+Code/Text Information Extraction/runs
+Code/.ipynb_checkpoints/
