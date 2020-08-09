@@ -57,6 +57,8 @@ class InformationExtractor():
                           16:["Democratic Republic of Congo", "Congo", "Dem. Rep. Congo"], 17:["Senegal", "Sénégal"], 
                           18:["South Sudan"], 19: ["Sudan"], 20: ["Sierra Lone"], 21: ["Tanzania"], 22: ["Chad", 
                          "Tchad", "Tchad"], 23: ["Togo"], 24: ["Uganda"]}
+        #problematic cases to discard after obtaininig named entities
+        self.problematic_cases = ["Upper", "Upper East", "Upper West", "East"]
                          
     #used to check a country and return its corresponding index - do this by looping through the values of the 
     #extensive dictionary list (specifically, loop through all the countries that begin with the same letter) 
@@ -91,6 +93,13 @@ class InformationExtractor():
         #extract any ner tagged with locations and append them to a location array
         ents = [(e.text, e.start_char, e.end_char, e.label_) for e in doc.ents if e.label_ in ["GPE", "LOC", "FAC"]]
         for (txt, start_char, end_char, _) in ents:
+            #remove brackets since this might be picked by the NER
+            if ")" in txt:
+                txt = txt.split(")")[0]
+                print("DFDFDFD")
+            #check problematic cases
+            if txt in self.problematic_cases:
+                continue
             locations.append(txt)
         #since some of the recognized entities are not recognized by the geocoder, need to put into a format that 
         #it can geocode
@@ -238,25 +247,33 @@ class InformationExtractor():
         return matcher
     
     def find_match(self, matcher, sentence, city):
+        
         doc = self.nlp(sentence)
         matches = matcher(doc)
         info = {}
-        for match_id, start, end in matches:
-            location = city
-            #check if city is a number => location is a country, and we need to parse it as such
-            if type(city) == int:
-                location = self.country_list[city]
-            #check we've matched with the noun representing the city
-            string_id = self.nlp.vocab.strings[match_id]
-            value = self.process_matches(string_id, start, doc, location, end)
-            info[string_id] = value
-            #Recall, we match with Regex - therefore LOC (location of interest) will always be at the start of the 
-            #phrase, however there may be other locations in the same sentence if it was not cuttoff properly
-            #e.g. due to missing punctuation marks etc. - if end_early is True, allows us to capture correct
-            #metrics for each location and waste unnecessary computation
-            if self.end_early:
-                self.end_early=False
-                break
+        #due to output of regex statement, relevant location will be the first item in the doc
+        #check second item to see if it's a number (e.g. in case of list of city, ar where keywords attack rate/cases
+        #is not mentioned)
+        try:
+            if type(float(doc[1].text)) == float:
+                info[city] = ('AR', float(doc[1].text))
+        except Exception:
+            for match_id, start, end in matches:
+                location = city
+                #check if city is a number => location is a country, and we need to parse it as such
+                if type(city) == int:
+                    location = self.country_list[city]
+                #check we've matched with the noun representing the city
+                string_id = self.nlp.vocab.strings[match_id]
+                value = self.process_matches(string_id, start, doc, location, end)
+                info[string_id] = value
+                #Recall, we match with Regex - therefore LOC (location of interest) will always be at the start of the 
+                #phrase, however there may be other locations in the same sentence if it was not cuttoff properly
+                #e.g. due to missing punctuation marks etc. - if end_early is True, allows us to capture correct
+                #metrics for each location and waste unnecessary computation
+                if self.end_early:
+                    self.end_early=False
+                    break
         return info
     
 
@@ -277,12 +294,10 @@ class InformationExtractor():
         return data_dict
 
 
-
     #call this function to given a summary, give necessary info for the forecasting pipeline
     def symbolically_process_summary(self, summary):
-    	return self.find_city_ars(self.return_sentences_for_countries(summary))
+        return self.find_city_ars(self.return_sentences_for_countries(summary))
     
-
 
 
 
