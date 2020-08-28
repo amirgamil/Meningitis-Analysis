@@ -3,10 +3,10 @@ The African meningitis belt is a group of 26 countries that is acutely susceptib
 
 
 Below are sample results for different countries - notice that the pipeline is robust to different patterns.
-[supporting_files/result_1.png]
+![supporting_files/result_1.png]
 
 The pipeline is divided into stages
 1. Symbolically extracting details for each country from WHO reports as shown below
-[supporting_files/nlp.png]
+![supporting_files/nlp.png]
 2. Combine this information with the previous number of cases at $x$ timesteps to predict the number of cases at the $x_{n+1}$ timestep in the following algorithm
-[supporting_files/algorithm.png]
+![supporting_files/algorithm.png]
