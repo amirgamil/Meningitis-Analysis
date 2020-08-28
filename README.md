@@ -11,6 +11,7 @@ The pipeline is divided into two stages
 1. Symbolically extracting details for each country from WHO reports as shown below
 ![](supporting_files/nlp.png)
 2. Combine this information with the previous recorded number of cases (over several timesteps) to predict the number of cases at the next timestep. We define this formally here:
+
 ![](supporting_files/algorithm.png)
 
 ### Dataset Information
