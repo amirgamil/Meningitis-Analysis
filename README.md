@@ -6,10 +6,10 @@ Below are sample results for different countries - notice that the pipeline is r
 ![](supporting_files/result_1.png)
 
 ### Pipeline
-The pipeline is divided into stages
+The pipeline is divided into two stages
 1. Symbolically extracting details for each country from WHO reports as shown below
 ![](supporting_files/nlp.png)
-2. Combine this information with the previous number of cases at $x$ timesteps to predict the number of cases at the $x_{n+1}$ timestep in the following algorithm
+2. Combine this information with the previous number of cases at $$x_{i}$$ timesteps to predict the number of cases at the $$x_{i+1}$$ timestep in the following algorithm
 ![](supporting_files/algorithm.png)
 
 
