@@ -31,7 +31,7 @@ For each report, we fill rows in our dataset with the number of cases, deaths, a
 
 
 ### Code Information
-There are 4 keys file in the Code folder:
+There are 2 keys file in the Code folder:
 1. data_preprocessing.ipynb
 This iPython notebook contains code to preprocess the original dataset for subsequent downstream tasks. It standarizes country names (since the same countries are referred to with different names in the original WHO reports), generates thresholds, processes the data into a pandas, and more.
 
@@ -43,4 +43,4 @@ auto_arima.fit(train_data)
 pipeline.find_optimal_parameters()
 pipeline.fit_and_predict(test_data, month_data_country_prophet, test_states, test_summaries, separation_test)
 ```
-
+Note the parameters for fit_and_predict will be available by running the prepare_data_for_model function at the top - that is where you can specify the country_index or the country from which to use data for. Currently, the code is written to run for the 7 countries with the most complete data, however this can be easily adapted in the data_preprocessing iPython notebook.
