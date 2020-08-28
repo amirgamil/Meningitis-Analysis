@@ -30,7 +30,7 @@ For each report, we fill rows in our dataset with the number of cases, deaths, a
 ### Code Information
 There are 2 keys file in the Code folder:
 1. data_preprocessing.ipynb
-This iPython notebook contains code to preprocess the original dataset for subsequent downstream tasks. It standarizes country names (since the same countries are referred to with different names in the original WHO reports), generates thresholds, processes the data into a pandas, and more.
+This iPython notebook contains code to preprocess the original dataset for subsequent downstream tasks. It standarizes country names (since the same countries are referred to with different names in the original WHO reports), generates thresholds, processes the data into a pandas df, and more.
 
 2. Forecasting Pipeline.ipynb
 This iPython notebook contains **all the code you need to run this pipeline**. It's composed of 3 modular classes which are combined in a final 4th class called ForecastingPipeline. To use this pipeline, it's as easy as doing the following
