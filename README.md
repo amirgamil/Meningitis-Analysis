@@ -1,5 +1,5 @@
 # MenViz: Analyzing and Forecasting Meningitis Outbreaks
-The African meningitis belt is a group of 26 countries that is acutely susceptible to meninigitis outbreaks, which can spread out of control and has killed hundreds of thousands of people. We present a dataset with more than 16 years of report information from the [World Health Organization](https://www.who.int/emergencies/diseases/meningitis/epidemiological/en/) (more information about the dataset can be found below) as well as a novel forecasting pipeline + symbolic NLU framework for extracting key details. 
+The African meningitis belt is a group of 26 countries that is acutely susceptible to meninigitis outbreaks, which can spread out of control and has killed hundreds of thousands of people. We present a dataset with more than **16 years of information** from the [World Health Organization](https://www.who.int/emergencies/diseases/meningitis/epidemiological/en/) (more information about the dataset can be found below) as well as a **novel forecasting pipeline + symbolic natural language understanding framework** for extracting key details from text reports. 
 
 ### Results
 Below are sample results for different countries. The y-axis represents the number of cases and the x-axis represents time where each datapoint is spaced one month apart - notice that the pipeline is robust to different patterns.
@@ -30,5 +30,17 @@ For each report, we fill rows in our dataset with the number of cases, deaths, a
 - If the report spans greater than one week (usually around a month), we record the date as the midpoint of the range
 
 
+### Code Information
+There are 4 keys file in the Code folder:
+1. data_preprocessing.ipynb
+This iPython notebook contains code to preprocess the original dataset for subsequent downstream tasks. It standarizes country names (since the same countries are referred to with different names in the original WHO reports), generates thresholds, processes the data into a pandas, and more.
 
+2. Forecasting Pipeline.ipynb
+This iPython notebook contains **all the code you need to run this pipeline**. It's composed of 3 modular classes which are combined in a final 4th class called ForecastingPipeline. To use this pipeline, it's as easy as doing the following
+```
+auto_arima = AutoArima()
+auto_arima.fit(train_data)
+pipeline.find_optimal_parameters()
+pipeline.fit_and_predict(test_data, month_data_country_prophet, test_states, test_summaries, separation_test)
+```
 
