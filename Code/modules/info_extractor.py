@@ -96,7 +96,6 @@ class InformationExtractor():
             #remove brackets since this might be picked by the NER
             if ")" in txt:
                 txt = txt.split(")")[0]
-                print("DFDFDFD")
             #check problematic cases
             if txt in self.problematic_cases:
                 continue
