@@ -13,7 +13,7 @@ The pipeline is divided into two stages
 2. Combine this information with the previous recorded number of cases (over several timesteps) to predict the number of cases at the next timestep. We define this formally here:
 ![](supporting_files/algorithm.png)
 ### Dataset Information
-Note, the dataset which can be found ![here](Current_Data/data2005to2019.csv) contains 5 columns: Date, Cases, Deaths, and Summary. The Current_Data folders contains several .csv files which are preprocessed version of the original dataset used for subsequent downstream tasks.
+Note, the dataset (named data2005to2019.csv) which can be found ![here](Current_Data/data2005to2019.csv) contains 5 columns: Date, Cases, Deaths, and Summary. The Current_Data folders contains several .csv files which are preprocessed version of the original dataset used for subsequent downstream tasks.
 The dataset was collected from weekly/monthly reports published by the World Health Organization that can be found [here](https://www.who.int/emergencies/diseases/meningitis/epidemiological/en/). Each report contains two key bits of information:
 1. A table with the number of recorded cases and deaths for each country across a specific timespan (in this case 1 week). We use this table to record individual rows in our dataset
 ![](supporting_files/report_1.png)
